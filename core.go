@@ -260,6 +260,15 @@ func (m *Model) BoundingBox() Box {
 	return box
 }
 
+func (i *Item) BoundingBox(m *Model) Box {
+	if o, ok := m.FindObject(i.ObjectPath(), i.ObjectID); ok {
+		ibox := o.boundingBox(m, i.ObjectPath())
+		return ibox
+	}
+
+	return Box{}
+}
+
 // FindResources returns the resource associated with path.
 func (m *Model) FindResources(path string) (*Resources, bool) {
 	if path == "" || path == m.Path || (m.Path == "" && path == DefaultModelPath) {
